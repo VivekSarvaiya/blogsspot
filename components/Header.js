@@ -2,15 +2,25 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
-
-import useWindowSize from '@/Hooks/useWindowSize';
+// import 'antd/dist/antd.css';
+// import { Menu, Dropdown } from 'antd';
+// import { DownOutlined } from '@ant-design/icons';
+import { Menu, Dropdown } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
 const Header = () => {
 
     const { data: session } = useSession();
     const [providers, setProviders] = useState(null)
-    console.log(session, providers);
-
+    const userMenu = (
+        <Menu>
+            <Menu.Item key="1">Item 1</Menu.Item>
+            <Menu.Item key="2">Item 2</Menu.Item>
+            <Menu.Item key="3">Item 3</Menu.Item>
+            <Menu.Divider />
+            <Menu.Item key="3">Logout</Menu.Item>
+        </Menu>
+    );
     useEffect(() => {
         const setProvider = async () => {
             const response = await getProviders();
@@ -73,14 +83,21 @@ const Header = () => {
 
                 {
                     session?.user ?
+                        <div>
+                            <Dropdown.Button
+                                style={{ float: 'right' }}
+                                className="dropdown-btn"
+                                overlay={userMenu}
 
-                        <a className="s-header__search-trigger" href="#" >
-                            <button>Logout</button>
-                        </a> :
+                            >
+                                <img src={session?.user?.image} />
+                            </Dropdown.Button>
+                        </div>
+                        :
                         providers &&
-                        Object.values(providers).map((provider) => (
+                        Object.values(providers).map((provider, i) => (
 
-                            <a className="s-header__search-trigger" href="#" >
+                            <a className="s-header__search-trigger" key={i}>
                                 <button key={provider.name} onClick={() => signIn(provider.id)} >Login</button>
                             </a>
                         ))

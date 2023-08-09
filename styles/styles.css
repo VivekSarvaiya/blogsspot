@@ -5597,3 +5597,11 @@ body.search-is-visible {
         padding-top: var(--vspace-1);
     }
 }
+
+.dropdown-btn>.ant-dropdown-trigger {
+    border: none;
+}
+
+.dropdown-btn>.ant-dropdown-trigger>span {
+    background-color: white !important;
+}
