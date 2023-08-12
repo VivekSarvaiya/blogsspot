@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
-import { Dropdown, Avatar } from "antd";
+import { Dropdown, Avatar, message, Button } from "antd";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 
 const Header = () => {
@@ -12,10 +12,16 @@ const Header = () => {
   const items = [
     {
       key: "1",
-      label: "Logout",
+      label: "Profile",
       icon: <RiLogoutCircleRLine />,
     },
   ];
+
+  const onClick = ({ key }) => {
+
+    message.info(`You have been logges out`);
+  };
+
   useEffect(() => {
     const setProvider = async () => {
       const response = await getProviders();
@@ -57,43 +63,7 @@ const Header = () => {
                   <li>
                     <a href="category.html">Photography</a>
                   </li>
-                  <li>
-                    <a href="category.html">Vacation</a>
-                  </li>
-                  <li>
-                    <a href="category.html">Work</a>
-                  </li>
-                  <li>
-                    <a href="category.html">Health</a>
-                  </li>
-                  <li>
-                    <a href="category.html">Family</a>
-                  </li>
-                  <li>
-                    <a href="category.html">Relationship</a>
-                  </li>
                 </ul>
-              </li>
-              <li className="has-children">
-                <a href="#0" title="">
-                  Blog
-                </a>
-                <ul className="sub-menu">
-                  <li>
-                    <a href="single-video.html">Video Post</a>
-                  </li>
-                  <li>
-                    <a href="single-audio.html">Audio Post</a>
-                  </li>
-                  <li>
-                    <a href="single-standard.html">Standard Post</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="styles.html" title="">
-                  Styles
-                </a>
               </li>
               <li>
                 <a href="about.html" title="">
@@ -118,11 +88,19 @@ const Header = () => {
         </a> */}
 
         {session?.user ? (
-          <div className="user_profile">
-            <Dropdown menu={{ items, onClick }} placement="bottomRight" arrow>
-              <Avatar src={session?.user?.image} />
-            </Dropdown>
-          </div>
+          <>
+
+            <div className="user_profile">
+              <Dropdown menu={{ items, onClick, }} placement="bottom" arrow>
+                <a onClick={(e) => e.preventDefault()}>
+                  <Avatar size={"large"} src={session?.user?.image} />
+                </a>
+              </Dropdown>
+            </div>
+            <div className="logout_button" onClick={signOut}>
+              <RiLogoutCircleRLine />
+            </div>
+          </>
         ) : (
           providers &&
           Object.values(providers).map((provider, i) => (
