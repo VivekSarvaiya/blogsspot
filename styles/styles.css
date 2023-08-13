@@ -5594,3 +5594,19 @@ body.search-is-visible {
   margin: 1.2rem 1rem;
   color: white;
 }
+
+.s-header_login,
+.s-header_write a {
+  display: block;
+  color: white;
+  line-height: var(--header-height);
+  position: relative;
+  cursor: pointer;
+}
+
+.s-header_write a {
+  margin: 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

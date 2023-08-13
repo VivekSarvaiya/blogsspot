@@ -3,32 +3,55 @@
 import React, { useEffect, useState } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
-import { Dropdown, Avatar, message, Button } from "antd";
+import Loader from "../app/loader"
+import { Dropdown, Avatar, } from "antd";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import { FiEdit } from "react-icons/fi"
+import UserOutlined from '@ant-design/icons/UserOutlined';
+import Link from "next/link";
 
 const Header = () => {
   const { data: session } = useSession();
   const [providers, setProviders] = useState(null);
+  const [loading, setLoading] = useState(true);
   const items = [
     {
       key: "1",
       label: "Profile",
+      icon: <UserOutlined />,
+    },
+    {
+      key: "2",
+      label: "Sign Out",
       icon: <RiLogoutCircleRLine />,
     },
   ];
 
   const onClick = ({ key }) => {
+    switch (key) {
+      case "2":
+        signOut();
+        break;
 
-    message.info(`You have been logges out`);
+      default:
+        console.log("defualt");
+        break;
+    }
+
   };
 
   useEffect(() => {
     const setProvider = async () => {
       const response = await getProviders();
       setProviders(response);
+      setLoading(false)
     };
     setProvider();
   }, []);
+
+  if (loading) {
+    return <Loader />
+  }
 
   return (
     <>
@@ -89,25 +112,26 @@ const Header = () => {
 
         {session?.user ? (
           <>
-
+            <div className="s-header_write" >
+              <Link href="/newblog">
+                <FiEdit /> write
+              </Link>
+            </div>
             <div className="user_profile">
-              <Dropdown menu={{ items, onClick, }} placement="bottom" arrow>
+              <Dropdown menu={{ items, onClick }} placement="bottomRight" arrow>
                 <a onClick={(e) => e.preventDefault()}>
                   <Avatar size={"large"} src={session?.user?.image} />
                 </a>
               </Dropdown>
-            </div>
-            <div className="logout_button" onClick={signOut}>
-              <RiLogoutCircleRLine />
             </div>
           </>
         ) : (
           providers &&
           Object.values(providers).map((provider, i) => (
             <a className="s-header__search-trigger" key={i}>
-              <button key={provider.name} onClick={() => signIn(provider.id)}>
+              <div className="s-header_login" key={provider.name} onClick={() => signIn(provider.id)}>
                 Login
-              </button>
+              </div>
             </a>
           ))
         )}
