@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import PostGallary from '../PostGallary'
+import PostGallary from '../Posts/PostGallary'
 
 function index() {
 

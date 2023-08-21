@@ -36,7 +36,7 @@ function Footer() {
                                 <li><a href="#0">Instagram</a></li>
                             </ul>
                         </div>
-                        <div className="column large-3 medium-6 tab-12 s-footer__subscribe">
+                        {/* <div className="column large-3 medium-6 tab-12 s-footer__subscribe">
                             <h5>Sign Up for Newsletter</h5>
                             <p>Signup to get updates on articles, interviews and events.</p>
                             <div className="subscribe-form">
@@ -46,7 +46,7 @@ function Footer() {
                                     <label htmlFor="mc-email" className="subscribe-message" />
                                 </form>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className="s-footer__bottom">

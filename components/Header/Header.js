@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import { usePathname } from 'next/navigation'
 
-import Loader from "../app/loader"
+import Loader from "../../app/loader"
 import { Dropdown, Avatar, } from "antd";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi"

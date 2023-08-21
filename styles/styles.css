@@ -2380,7 +2380,8 @@ select {
 }
 
 textarea {
-  min-height: 25.6rem;
+  min-height: 15rem;
+  resize: none;
 }
 
 input[type="email"]:focus,
@@ -2402,7 +2403,7 @@ legend {
   font-weight: 700;
   font-size: var(--text-sm);
   line-height: var(--vspace-0_5);
-  margin-bottom: var(--vspace-0_5);
+  /* margin-bottom: var(--vspace-0_5); */
   color: var(--color-text-dark);
   display: block;
 }
@@ -5609,4 +5610,78 @@ body.search-is-visible {
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+.ant-select-selector {
+  border: none !important;
+  border-bottom: 1px solid !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 1.5rem 0 !important;
+  margin-bottom: var(--vspace-1);
+}
+
+.ant-select-selection-placeholder {
+  inset-inline-start: 0 !important;
+  inset-inline-end: 0 !important;
+  color: var(--color-gray-7) !important;
+  font-family: var(--font-1) !important;
+  font-size: calc(var(--text-size) * 0.7778) !important;
+  line-height: var(--input-line-height) !important;
+}
+
+/* ========= Image Uploader ========= */
+.image_upload_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  gap: 10px;
+  margin: 2rem 0;
+}
+
+.image_upload_container .select_file_container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 15px 0;
+  background: #ffffff;
+  border: 1px dashed #aaaaaa;
+  border-radius: 16px;
+}
+
+.select_file_container .choose_file label {
+  --btn-height: var(--vspace-btn);
+  display: inline-block;
+  font-family: var(--font-1);
+  font-weight: 400;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  height: var(--btn-height);
+  line-height: calc(var(--btn-height) - 0.4rem);
+  padding: 0 3.2rem;
+  margin: 0 0.4rem 1.6rem 0;
+  color: var(--color-btn-text);
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-btn);
+  border: 0.2rem solid var(--color-btn);
+}
+
+.select_file_container .choose_file label :is(:hover, :focus) {
+  background-color: var(--color-btn-hover);
+  border-color: var(--color-btn-hover);
+  color: var(--color-btn-hover-text);
+  outline: 0;
 }
