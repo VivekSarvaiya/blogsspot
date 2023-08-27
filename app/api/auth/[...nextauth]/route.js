@@ -43,7 +43,7 @@ const handler = NextAuth({
         }
     },
     session: {
-        maxAge: 28800, // 8 hours in seconds
+        maxAge: 43200, // 8 hours in seconds
     },
 })
 export { handler as GET, handler as POST }

@@ -1,9 +1,22 @@
 "use client"
 import React, { useState } from 'react'
+import { useSession } from 'next-auth/react';
 import { Select } from 'antd'
 
 const page = () => {
-    const [file, setFile] = useState(null)
+    const { data: session } = useSession();
+    const [imagePreview, setImagePreview] = useState(null)
+    const [image, setImage] = useState(null);
+    const [data, setData] = useState({
+        title: "",
+        description: "",
+        tags: [],
+    })
+
+    const changeHamdler = (e) => {
+        setData({ ...data, [e.target.name]: e.target.value })
+    }
+
     const options = [];
     for (let i = 10; i < 36; i++) {
         options.push({
@@ -12,13 +25,7 @@ const page = () => {
         });
     }
 
-    const handleChange = (e) => {
-        console.log(e);
-    }
-
     const dropHandler = (e) => {
-        console.log("File(s) dropped");
-        // Prevent default behavior (Prevent file from being opened)
         e.preventDefault();
 
         if (e.dataTransfer.items) {
@@ -28,7 +35,8 @@ const page = () => {
                 console.log(item);
                 if (item.type.split("/")[0] === "image") {
                     const file = item.getAsFile();
-                    setFile(URL.createObjectURL(file))
+                    setImage(file)
+                    setImagePreview(URL.createObjectURL(file))
 
                 } else {
                     alert("Given file is not a valid image ")
@@ -47,8 +55,37 @@ const page = () => {
     };
 
     const chooseFile = async (e) => {
-        setFile(URL.createObjectURL(e.target.files[0]))
+        setImage(e.target.files[0])
+        setImagePreview(URL.createObjectURL(e.target.files[0]))
     };
+
+    const submitHandler = async (e) => {
+        e.preventDefault()
+        const formData = new FormData();
+        formData.append('userId', session?.user.id);
+        formData.append('title', data.title);
+        formData.append('description', data.description);
+        formData.append('tags', data.tags);
+        formData.append('image', image);
+
+        try {
+            const response = await fetch('/api/blog/new', {
+                method: "POST",
+                // body: formData,
+                body: JSON.stringify({
+                    ...data,
+                    userId: session?.user.id
+                }),
+            })
+
+            if (response.ok) {
+                console.log(response);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <section className='s-content'>
             <div className="s-content__entry-header">
@@ -60,11 +97,11 @@ const page = () => {
                     <form>
                         <div>
                             <label htmlFor="sampleInput">Title</label>
-                            <input className="h-full-width" type='text' placeholder="Title Of The Post" id="sampleInput" required />
+                            <input className="h-full-width" type='text' placeholder="Title Of The Post" required name='title' onChange={changeHamdler} />
                         </div>
                         <div>
                             <label htmlFor="exampleMessage">Description</label>
-                            <textarea className="h-full-width" rows={2} placeholder="Description Of The Post" required />
+                            <textarea className="h-full-width" rows={2} placeholder="Description Of The Post" required name='description' onChange={changeHamdler} />
                         </div>
                         <div>
                             <label htmlFor="exampleMessage">Hashtags To Include</label>
@@ -72,7 +109,7 @@ const page = () => {
                                 mode="multiple"
                                 style={{ width: '100%' }}
                                 placeholder="Please select"
-                                onChange={handleChange}
+                                onChange={(e) => setData({ ...data, tags: e })}
                                 options={options}
                             />
                         </div>
@@ -87,11 +124,11 @@ const page = () => {
                                         <input hidden type="file" accept="image/*" id="chooseFile" onChange={chooseFile} />
                                     </div>
                                 </div>
-                                <img src={file} />
 
                             </div>
+                            <img src={imagePreview} />
                         </div>
-                        <input className="btn--primary h-full-width" type="submit" defaultValue="Submit" />
+                        <input className="btn--primary h-full-width" type="button" defaultValue="Submit" onClick={submitHandler} />
                     </form>
                 </div>
 
