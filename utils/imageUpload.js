@@ -1,23 +1,27 @@
-import path from "path";
-import { writeFile } from "fs/promises";
+import fs from 'fs/promises';
+import path from 'path';
+
 
 export const imageUplaod = async (file, folder) => {
 
     if (!file) {
-        return "File not received"
+        return "File not received";
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    const filename = Date.now() + file.name.replaceAll(" ", "_");
-    console.log(filename);
+    const filename = Date.now() + file.name.replace(/\W+/g, '_');
+
     try {
-        const imageUrl = await writeFile(
-            path.join(process.cwd(), `public/${folder}/` + filename),
-            buffer
-        );
-        return imageUrl;
+        const folderPath = path.join(process.cwd(), 'public', folder);
+        await fs.mkdir(folderPath, { recursive: true });
+
+        const imagePath = path.join(folderPath, filename);
+
+        await fs.writeFile(imagePath, buffer);
+
+        return imagePath;
     } catch (error) {
-        console.log("Error occured ", error);
-        return "Failed"
+        console.log("Error occurred: ", error);
+        return "Failed";
     }
 };

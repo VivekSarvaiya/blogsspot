@@ -17,6 +17,10 @@ const BlogSchema = new Schema({
         type: Array,
         required: [true, "Tags are required"]
     },
+    image: {
+        type: String,
+        required: [true, "Image is required"]
+    },
 })
 
 

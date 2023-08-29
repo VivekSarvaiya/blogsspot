@@ -66,16 +66,12 @@ const page = () => {
         formData.append('title', data.title);
         formData.append('description', data.description);
         formData.append('tags', data.tags);
-        formData.append('image', image);
+        image && formData.append('image', image);
 
         try {
             const response = await fetch('/api/blog/new', {
                 method: "POST",
-                // body: formData,
-                body: JSON.stringify({
-                    ...data,
-                    userId: session?.user.id
-                }),
+                body: formData
             })
 
             if (response.ok) {
@@ -91,49 +87,48 @@ const page = () => {
             <div className="s-content__entry-header">
                 <h1 className="s-content__title">Publish Your Ideas.</h1>
             </div>
-            <div className="row" style={{ width: "50%" }}>
-                <div className="column large-12 tab-12">
+            {/* <div className="row "> */}
+            <div className="column large-5 tab-12 mob-11" style={{ margin: "auto" }}>
 
-                    <form>
-                        <div>
-                            <label htmlFor="sampleInput">Title</label>
-                            <input className="h-full-width" type='text' placeholder="Title Of The Post" required name='title' onChange={changeHamdler} />
-                        </div>
-                        <div>
-                            <label htmlFor="exampleMessage">Description</label>
-                            <textarea className="h-full-width" rows={2} placeholder="Description Of The Post" required name='description' onChange={changeHamdler} />
-                        </div>
-                        <div>
-                            <label htmlFor="exampleMessage">Hashtags To Include</label>
-                            <Select
-                                mode="multiple"
-                                style={{ width: '100%' }}
-                                placeholder="Please select"
-                                onChange={(e) => setData({ ...data, tags: e })}
-                                options={options}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="exampleMessage">Thumbnail Image</label>
-                            <div className="image_upload_container" onDrop={dropHandler} onDragOver={dragOverHandler}>
-                                <div className="select_file_container" htmlFor="chooseFile">
-                                    <span>Drag and drop the image here</span>
-                                    <span>Or</span>
-                                    <div className="choose_file">
-                                        <label htmlFor="chooseFile">Select File</label>
-                                        <input hidden type="file" accept="image/*" id="chooseFile" onChange={chooseFile} />
-                                    </div>
+                <form>
+                    <div>
+                        <label htmlFor="sampleInput">Title</label>
+                        <input className="h-full-width" type='text' placeholder="Title Of The Post" required name='title' onChange={changeHamdler} />
+                    </div>
+                    <div>
+                        <label htmlFor="exampleMessage">Description</label>
+                        <textarea className="h-full-width" rows={2} placeholder="Description Of The Post" required name='description' onChange={changeHamdler} />
+                    </div>
+                    <div>
+                        <label htmlFor="exampleMessage">Hashtags To Include</label>
+                        <Select
+                            mode="multiple"
+                            style={{ width: '100%' }}
+                            placeholder="Please select"
+                            onChange={(e) => setData({ ...data, tags: e })}
+                            options={options}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="exampleMessage">Thumbnail Image</label>
+                        <div className="image_upload_container" onDrop={dropHandler} onDragOver={dragOverHandler}>
+                            <div className="select_file_container" htmlFor="chooseFile">
+                                <span>Drag and drop the image here</span>
+                                <span>Or</span>
+                                <div className="choose_file">
+                                    <label htmlFor="chooseFile">Select File</label>
+                                    <input hidden type="file" accept="image/*" id="chooseFile" onChange={chooseFile} />
                                 </div>
-
                             </div>
-                            <img src={imagePreview} />
-                        </div>
-                        <input className="btn--primary h-full-width" type="button" defaultValue="Submit" onClick={submitHandler} />
-                    </form>
-                </div>
 
+                        </div>
+                        <img src={imagePreview} />
+                    </div>
+                    <input className="btn--primary h-full-width" type="button" defaultValue="Submit" onClick={submitHandler} />
+                </form>
             </div>
 
+            {/* </div> */}
         </section>
     )
 }
