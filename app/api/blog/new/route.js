@@ -1,6 +1,7 @@
 import Blog from "@/models/blog";
 import { connectTODB } from "@/utils/database";
 import { imageUplaod } from "@/utils/imageUpload";
+import { NextResponse } from "next/server";
 
 export const POST = async (req, res) => {
     const data = await req.formData()
@@ -21,10 +22,9 @@ export const POST = async (req, res) => {
             image
         })
         await newBlog.save();
-        console.log(newBlog);
-        return new Response(JSON.stringify(newBlog), { status: 201 })
+        return NextResponse.json(newBlog)
     } catch (error) {
         console.log(error);
-        return new Response("Failed", { status: 500 })
+        return NextResponse.json({ message: error })
     }
 }

@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import { useSession } from 'next-auth/react';
 import { Select } from 'antd'
+import axios from 'axios';
 
 const page = () => {
     const { data: session } = useSession();
@@ -32,18 +33,15 @@ const page = () => {
             // Use DataTransferItemList interface to access the file(s)
             [...e.dataTransfer.items].forEach((item, i) => {
                 // If dropped items aren't files, reject them
-                console.log(item);
                 if (item.type.split("/")[0] === "image") {
                     const file = item.getAsFile();
                     setImage(file)
                     setImagePreview(URL.createObjectURL(file))
-
                 } else {
-                    alert("Given file is not a valid image ")
+                    console.log("Given file is not a valid image ")
                 }
             });
         } else {
-            console.log(e.dataTransfer.items, e.dataTransfer.files);
             [...e.dataTransfer.files].forEach((file, i) => {
                 console.log(`… file[${i}].name = ${file.name}`);
             });
@@ -69,14 +67,8 @@ const page = () => {
         image && formData.append('image', image);
 
         try {
-            const response = await fetch('/api/blog/new', {
-                method: "POST",
-                body: formData
-            })
-
-            if (response.ok) {
-                console.log(response);
-            }
+            const response = await axios.post('/api/blog/new', formData)
+            console.log(response);
         } catch (error) {
             console.log(error);
         }
@@ -88,7 +80,7 @@ const page = () => {
                 <h1 className="s-content__title">Publish Your Ideas.</h1>
             </div>
             {/* <div className="row "> */}
-            <div className="column large-5 tab-12 mob-11" style={{ margin: "auto" }}>
+            <div className="column large-8 medium-8 tab-10 mob-11" style={{ margin: "auto" }}>
 
                 <form>
                     <div>
