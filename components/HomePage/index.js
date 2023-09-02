@@ -1,9 +1,11 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import PostGallary from '../Posts/PostGallary'
+import axios from 'axios'
 
 function index() {
 
+    const [blogs, setBlogs] = useState([])
     const [slide, setSlide] = useState(1)
 
     const next = () => {
@@ -12,6 +14,19 @@ function index() {
     const previous = () => {
         slide !== 1 ? setSlide(slide - 1) : setSlide(3)
     }
+
+    const getBlogs = async () => {
+        try {
+            const blogs = await axios.get("/api/blog")
+            setBlogs(blogs.data)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getBlogs()
+    }, [])
 
     return (
         <>
@@ -127,7 +142,7 @@ function index() {
                 </div>
             </section>
 
-            <PostGallary />
+            <PostGallary blogs={blogs} />
         </>
     )
 }
