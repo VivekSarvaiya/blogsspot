@@ -28,6 +28,12 @@ function index() {
         getBlogs()
     }, [])
 
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         next()
+    //     }, 5000);
+    // }, [slide])
+
     return (
         <>
             <section id="hero" className="s-hero">

@@ -19,7 +19,7 @@ export const imageUplaod = async (file, folder) => {
 
         await fs.writeFile(imagePath, buffer);
 
-        return imagePath;
+        return `${folder}/${filename}`;
     } catch (error) {
         console.log("Error occurred: ", error);
         return "Failed";

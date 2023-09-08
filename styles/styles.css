@@ -2325,7 +2325,7 @@ select {
   outline: none;
   color: var(--color-text);
   font-family: var(--font-1);
-  font-size: calc(var(--text-size) * 0.7778);
+  font-size: var(--text-size);
   line-height: var(--input-line-height);
   max-width: 100%;
   background: transparent;
@@ -5626,7 +5626,7 @@ body.search-is-visible {
   inset-inline-end: 0 !important;
   color: var(--color-gray-7) !important;
   font-family: var(--font-1) !important;
-  font-size: calc(var(--text-size) * 0.7778) !important;
+  font-size: var(--text-size) !important;
   line-height: var(--input-line-height) !important;
 }
 
@@ -5684,4 +5684,12 @@ body.search-is-visible {
   border-color: var(--color-btn-hover);
   color: var(--color-btn-hover-text);
   outline: 0;
+}
+
+.images_container {
+  border: 1px solid;
+  border-radius: 5px;
+  height: 40rem;
+  padding: 8px;
+  overflow: auto;
 }

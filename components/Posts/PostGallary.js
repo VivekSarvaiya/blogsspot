@@ -1,7 +1,6 @@
 import React from 'react'
 
 const PostGallary = ({ blogs }) => {
-    console.log(blogs[0]?.image);
     return (
         <>
             <section className="s-content s-content--no-top-padding">
@@ -27,8 +26,8 @@ const PostGallary = ({ blogs }) => {
                                                 <h1 className="entry__title"><a href="single-standard.html">{blog?.title}</a></h1>
                                                 <div className="entry__meta">
                                                     <span className="byline">By:
-                                                        <span className="author">
-                                                            <a href=" #0">{blog?.creator?.username}</a>
+                                                        <span className="author">&nbsp;
+                                                            <a href=" #0"> {blog?.creator?.username}</a>
                                                         </span>
                                                     </span>
                                                     <span className="cat-links">
@@ -50,6 +49,7 @@ const PostGallary = ({ blogs }) => {
 
                                 ))
                             }
+
                         </div>
                     </div>
                 </div>
