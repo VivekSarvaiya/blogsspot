@@ -53,16 +53,16 @@ const page = () => {
                 <h1 className="s-content__title">Publish Your Ideas.</h1>
             </div>
 
-            <div className="column large-6 medium-8 tab-10 mob-11" style={{ margin: "auto" }}>
+            <div className="column large-8 medium-10 tab-10 mob-11" style={{ margin: "auto" }}>
 
                 <form>
                     <div>
                         <label htmlFor="title">Title</label>
-                        <input className="h-full-width" type='text' placeholder="Title Of The Post" required name='title' onChange={changeHamdler} />
+                        <input className="h-full-width" type='text' placeholder="Title Of The Post" name='title' onChange={changeHamdler} />
                     </div>
                     <div>
                         <label htmlFor="description">Description</label>
-                        <textarea className="h-full-width" rows={2} placeholder="Description Of The Post" required name='description' onChange={changeHamdler} />
+                        <textarea className="h-full-width" rows={2} placeholder="Description Of The Post" name='description' onChange={changeHamdler} />
                     </div>
                     <div>
                         <label htmlFor="hashtags">Tags </label>
